@@ -26,4 +26,9 @@ public class CategoryController {
     public ResponseEntity<List<CategoryDto>> getAllCategories() {
         return ResponseEntity.ok(categoryService.getAllCategories());
     }
+
+    @GetMapping("/getbyid")
+    public ResponseEntity<CategoryDto> getCategoryById(@RequestParam(name = "id") String id) {
+        return ResponseEntity.ok(categoryService.getCategoryById(id));
+    }
 }

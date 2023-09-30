@@ -4,6 +4,7 @@ package com.kivanc.ecommerce.productservice.service;
 import com.kivanc.ecommerce.productservice.dto.CategoryDto;
 import com.kivanc.ecommerce.productservice.dto.CreateCategoryRequest;
 import com.kivanc.ecommerce.productservice.dto.converter.CategoryDtoConverter;
+import com.kivanc.ecommerce.productservice.exception.CategoryNotFoundException;
 import com.kivanc.ecommerce.productservice.model.Category;
 import com.kivanc.ecommerce.productservice.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
@@ -33,9 +34,13 @@ public class CategoryService {
                 .toList();
     }
 
-    protected Category findCategoryById(String categoryId) {
-        return categoryRepository.findById(categoryId).orElseThrow(
-                () -> new RuntimeException("Category could not be found by id: " + categoryId));
+    protected Category findCategoryById(String id) {
+        return categoryRepository.findById(id).orElseThrow(
+                () -> new CategoryNotFoundException("Category could not be found by id: " + id));
 
+    }
+
+    public CategoryDto getCategoryById(String id) {
+        return categoryDtoConverter.convertToCategoryDto(findCategoryById(id));
     }
 }

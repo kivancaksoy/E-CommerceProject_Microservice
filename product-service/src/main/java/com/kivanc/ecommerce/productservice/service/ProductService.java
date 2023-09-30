@@ -4,6 +4,7 @@ import com.kivanc.ecommerce.productservice.dto.CategoryDto;
 import com.kivanc.ecommerce.productservice.dto.CreateProductRequest;
 import com.kivanc.ecommerce.productservice.dto.ProductDto;
 import com.kivanc.ecommerce.productservice.dto.converter.ProductDtoConverter;
+import com.kivanc.ecommerce.productservice.exception.ProductNotFoundException;
 import com.kivanc.ecommerce.productservice.model.Category;
 import com.kivanc.ecommerce.productservice.model.Product;
 import com.kivanc.ecommerce.productservice.repository.ProductRepository;
@@ -41,5 +42,10 @@ public class ProductService {
         return productList.stream()
                 .map(productDtoConverter::convertToProductDto)
                 .toList();
+    }
+
+    public ProductDto getProductById(String id) {
+        return productDtoConverter.convertToProductDto(productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product could not be found by id: " + id)));
     }
 }
