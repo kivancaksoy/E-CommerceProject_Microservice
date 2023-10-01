@@ -27,8 +27,8 @@ data class Product @JvmOverloads constructor(
     @JoinColumn(name = "category_id", nullable = false, referencedColumnName = "id")
     val category: Category,
 
-/*    // TODO productImage oluştur.
-    @OneToMany(mappedBy = "product")
+    // TODO productImage oluştur.
+    /*@OneToMany(mappedBy = "product")
     val productImages: Set<ProductImage>*/
 
 )
