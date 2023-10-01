@@ -30,6 +30,7 @@ public class ProductService {
                 createProductRequest.getProductName(),
                 createProductRequest.getDetails(),
                 createProductRequest.getPrice(),
+                createProductRequest.getUnitsInStock(),
                 categoryService.findCategoryById(createProductRequest.getCategoryId())
         );
 
