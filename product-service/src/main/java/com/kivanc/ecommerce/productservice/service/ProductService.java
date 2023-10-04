@@ -46,7 +46,11 @@ public class ProductService {
     }
 
     public ProductDto getProductById(String id) {
-        return productDtoConverter.convertToProductDto(productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product could not be found by id: " + id)));
+        return productDtoConverter.convertToProductDto(findProductById(id));
+    }
+
+    protected Product findProductById(String productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException("Product could not be found by id: " + productId));
     }
 }
