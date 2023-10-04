@@ -20,7 +20,7 @@ public class ProductImageService {
     private final ProductService productService;
     private final LocalStorageService localStorageService;
 
-    @Value("${imageFolderPath}") //TODO get from vault
+    @Value("${product-image-service.image.folder.path}") //TODO get from vault
     String folderPath;
 
     public ProductImageService(ProductImageRepository productImageRepository, ProductImageDtoConverter productImageDtoConverter, ProductService productService, LocalStorageService localStorageService) {

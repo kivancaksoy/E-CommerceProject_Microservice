@@ -1,0 +1,29 @@
+version: '3'
+services:
+  vault:
+    image: hashicorp/vault
+    container_name: vault
+    ports:
+      - "8200:8200"
+    restart: always
+    volumes:
+      - ./vault/volumes/logs:/vault/logs
+      - ./vault/volumes/file:/vault/file
+      - ./vault/volumes/config:/vault/config
+    cap_add:
+      - IPC_LOCK
+    environment:
+      VAULT_ADDR: http://127.0.0.1:8200
+    entrypoint: vault server -config=/vault/config/vault.json
+  postgres:
+    image: postgres:latest
+    container_name: mypostgresdb
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - ./postgres/volumes/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: productDb
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
