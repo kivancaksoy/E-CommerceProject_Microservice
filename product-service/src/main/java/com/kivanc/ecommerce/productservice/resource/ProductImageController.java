@@ -1,13 +1,12 @@
 package com.kivanc.ecommerce.productservice.resource;
 
-import com.kivanc.ecommerce.productservice.dto.CreateProductImageRequest;
 import com.kivanc.ecommerce.productservice.dto.ProductImageDto;
 import com.kivanc.ecommerce.productservice.service.ProductImageService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/v1/productimage")
@@ -18,8 +17,9 @@ public class ProductImageController {
         this.productImageService = productImageService;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<ProductImageDto> createProductImage(@RequestBody CreateProductImageRequest createProductImageRequest) {
-        return ResponseEntity.ok(productImageService.createProductImage(createProductImageRequest));
+    @PostMapping("/upload")
+    public ResponseEntity<ProductImageDto> uploadProductImage(@RequestPart("imageFile") MultipartFile imageFile,
+                                                              @RequestParam("productId") String productId) throws IOException {
+        return ResponseEntity.ok(productImageService.uploadProductImage(imageFile, productId));
     }
 }
