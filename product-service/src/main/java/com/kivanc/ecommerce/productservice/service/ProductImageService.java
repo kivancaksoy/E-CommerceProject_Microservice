@@ -2,6 +2,7 @@ package com.kivanc.ecommerce.productservice.service;
 
 import com.kivanc.ecommerce.productservice.dto.ProductImageDto;
 import com.kivanc.ecommerce.productservice.dto.converter.ProductImageDtoConverter;
+import com.kivanc.ecommerce.productservice.helper.FileNameHelper;
 import com.kivanc.ecommerce.productservice.helper.LocalStorageService;
 import com.kivanc.ecommerce.productservice.model.ProductImage;
 import com.kivanc.ecommerce.productservice.repository.ProductImageRepository;
@@ -20,7 +21,7 @@ public class ProductImageService {
     private final ProductService productService;
     private final LocalStorageService localStorageService;
 
-    @Value("${product-image-service.image.folder.path}") //TODO get from vault
+    @Value("${product-image-service.image.folder.path}")
     String folderPath;
 
     public ProductImageService(ProductImageRepository productImageRepository, ProductImageDtoConverter productImageDtoConverter, ProductService productService, LocalStorageService localStorageService) {
@@ -32,11 +33,12 @@ public class ProductImageService {
 
     @Transactional
     public ProductImageDto uploadProductImage(MultipartFile imageFile, String productId) throws IOException {
+        String newFileName = FileNameHelper.generateRandomFileName(Objects.requireNonNull(imageFile.getOriginalFilename()));
 
-        localStorageService.uploadImage(imageFile, folderPath);
+        localStorageService.uploadImage(imageFile, folderPath, newFileName);
 
         ProductImage productImage = new ProductImage(
-                Objects.requireNonNull(imageFile.getOriginalFilename()),
+                newFileName,
                 folderPath,
                 productService.findProductById(productId)
         );

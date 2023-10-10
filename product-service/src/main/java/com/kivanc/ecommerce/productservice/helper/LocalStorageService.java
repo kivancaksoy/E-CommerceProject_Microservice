@@ -11,7 +11,7 @@ import java.nio.file.Files;
 
 @Component
 public class LocalStorageService {
-    public void uploadImage(MultipartFile file, String folderPath) throws IOException {
+    public void uploadImage(MultipartFile file, String folderPath, String fileName) throws IOException {
 
         // Klasörü kontrol etme ve yoksa oluşturma
         File folder = new File(folderPath);
@@ -21,8 +21,10 @@ public class LocalStorageService {
 
         // Resim dosyasını kaydetme
         byte[] bytes = file.getBytes();
-        Path filePath = Paths.get(folderPath, file.getOriginalFilename() + "_" + ".jpg");
+        Path filePath = Paths.get(folderPath, fileName);
         Files.write(filePath, bytes);
 
     }
+
+
 }
