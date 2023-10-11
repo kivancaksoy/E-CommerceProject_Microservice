@@ -199,4 +199,4 @@ README.html
 *.iml
 .idea
 .exercism
-dockerFiles/postgres
+dockerFiles/postgres/volumes
