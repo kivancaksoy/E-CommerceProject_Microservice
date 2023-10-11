@@ -1,5 +1,6 @@
 package com.kivanc.ecommerce.productservice.service;
 
+import com.kivanc.ecommerce.productservice.TestSupport;
 import com.kivanc.ecommerce.productservice.dto.CategoryDto;
 import com.kivanc.ecommerce.productservice.dto.CreateProductRequest;
 import com.kivanc.ecommerce.productservice.dto.ProductDto;
@@ -22,7 +23,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
-class ProductServiceTest {
+class ProductServiceTest extends TestSupport {
     private ProductRepository productRepository;
     private CategoryService categoryService;
     private ProductDtoConverter productDtoConverter;
@@ -51,7 +52,7 @@ class ProductServiceTest {
 
     @Test
     public void testGetProductById_whenProductIdExists_shouldReturnProductDto() {
-        String productId = "product-id";
+        /*String productId = "product-id";
         Category category = new Category("category-id", "category-name");
         CategoryDto categoryDto = new CategoryDto("category-id", "category-name");
 
@@ -69,7 +70,10 @@ class ProductServiceTest {
                 "product-details",
                 new BigDecimal(10),
                 5,
-                categoryDto);
+                categoryDto);*/
+        String productId = "product-id";
+        Product product = generateProduct(productId);
+        ProductDto productDto = generateProductDto();
 
         Mockito.when(productRepository.findById(productId)).thenReturn(Optional.of(product));
         Mockito.when(productDtoConverter.convertToProductDto(product)).thenReturn(productDto);
@@ -84,7 +88,7 @@ class ProductServiceTest {
 
     @Test
     public void testGetAllProducts_shouldReturnProductDtoList() {
-        Category category = new Category("category-id", "category-name");
+        /*Category category = new Category("category-id", "category-name");
         CategoryDto categoryDto = new CategoryDto("category-id", "category-name");
 
         Product product1 = new Product(
@@ -125,7 +129,10 @@ class ProductServiceTest {
 
         List<ProductDto> productDtoList = new ArrayList<>();
         productDtoList.add(productDto1);
-        productDtoList.add(productDto2);
+        productDtoList.add(productDto2);*/
+
+        List<Product> productList = generateProductList();
+        List<ProductDto> productDtoList = generateProductDtoList();
 
         Mockito.when(productRepository.findAll()).thenReturn(productList);
         //TODO Check out the following two approaches for productDtoConverter
@@ -152,13 +159,13 @@ class ProductServiceTest {
         assertEquals(result, productDtoList);
 
         Mockito.verify(productRepository).findAll();
-        Mockito.verify(productDtoConverter).convertToProductDto(product1);
-        Mockito.verify(productDtoConverter).convertToProductDto(product2);
+        Mockito.verify(productDtoConverter).convertToProductDto(productList.get(0));
+        Mockito.verify(productDtoConverter).convertToProductDto(productList.get(1));
     }
 
     @Test
     public void testCreateProduct_shouldReturnProductDto() {
-        CreateProductRequest createProductRequest = new CreateProductRequest(
+        /*CreateProductRequest createProductRequest = new CreateProductRequest(
                 "product-name",
                 "product-details",
                 new BigDecimal(10),
@@ -182,9 +189,14 @@ class ProductServiceTest {
                 "product-details",
                 new BigDecimal(10),
                 5,
-                categoryDto);
+                categoryDto);*/
 
-        Mockito.when(categoryService.findCategoryById("12345")).thenReturn(category);
+        CreateProductRequest createProductRequest = generateCreateProductRequest();
+        Category category = generateCategory("category-id");
+        Product product = generateProduct();
+        ProductDto productDto = generateProductDto();
+
+        Mockito.when(categoryService.findCategoryById("category-id")).thenReturn(category);
         Mockito.when(productRepository.save(product)).thenReturn(product);
         Mockito.when(productDtoConverter.convertToProductDto(product)).thenReturn(productDto);
 
@@ -194,7 +206,7 @@ class ProductServiceTest {
         assertEquals(result, productDto);
 
         Mockito.verify(productRepository).save(product);
-        Mockito.verify(categoryService).findCategoryById("12345");
+        Mockito.verify(categoryService).findCategoryById("category-id");
         Mockito.verify(productDtoConverter).convertToProductDto(product);
     }
 }

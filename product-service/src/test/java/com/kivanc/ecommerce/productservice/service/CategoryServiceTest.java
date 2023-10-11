@@ -1,5 +1,6 @@
 package com.kivanc.ecommerce.productservice.service;
 
+import com.kivanc.ecommerce.productservice.TestSupport;
 import com.kivanc.ecommerce.productservice.dto.CategoryDto;
 import com.kivanc.ecommerce.productservice.dto.CreateCategoryRequest;
 import com.kivanc.ecommerce.productservice.dto.converter.CategoryDtoConverter;
@@ -18,7 +19,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
-class CategoryServiceTest {
+class CategoryServiceTest extends TestSupport {
     private CategoryRepository categoryRepository;
     private CategoryDtoConverter categoryDtoConverter;
     private CategoryService categoryService;
@@ -45,9 +46,12 @@ class CategoryServiceTest {
 
     @Test
     public void testGetCategoryById_whenCategoryIdExists_shouldReturnCategoryDto() {
-        String categoryId = "category-id";
+/*        String categoryId = "category-id";
         Category category = new Category(categoryId, "category-name");
-        CategoryDto categoryDto = new CategoryDto(categoryId, "category-name");
+        CategoryDto categoryDto = new CategoryDto(categoryId, "category-name");*/
+        String categoryId = "category-id";
+        Category category = generateCategory("category-id");
+        CategoryDto categoryDto = generateCategoryDto();
 
         Mockito.when(categoryRepository.findById(categoryId)).thenReturn(Optional.of(category));
         Mockito.when(categoryDtoConverter.convertToCategoryDto(category)).thenReturn(categoryDto);
@@ -62,7 +66,7 @@ class CategoryServiceTest {
 
     @Test
     public void testGetAllCategories_shouldReturnCategoryDtoList() {
-        Category category1 = new Category("category-id-1", "category-name-1");
+/*        Category category1 = new Category("category-id-1", "category-name-1");
         Category category2 = new Category("category-id-2", "category-name-2");
         List<Category> categoryList = new ArrayList<>();
         categoryList.add(category1);
@@ -72,7 +76,10 @@ class CategoryServiceTest {
         CategoryDto categoryDto2 = new CategoryDto("category-id-2", "category-name-2");
         List<CategoryDto> categoryDtoList = new ArrayList<>();
         categoryDtoList.add(categoryDto1);
-        categoryDtoList.add(categoryDto2);
+        categoryDtoList.add(categoryDto2);*/
+
+        List<Category> categoryList = generateCategoryList();
+        List<CategoryDto> categoryDtoList = generateCategoryDtoList();
 
         Mockito.when(categoryRepository.findAll()).thenReturn(categoryList);
         Mockito.when(categoryDtoConverter.convertToCategoryDto(any())).thenAnswer(
@@ -86,18 +93,21 @@ class CategoryServiceTest {
         assertEquals(result, categoryDtoList);
 
         Mockito.verify(categoryRepository).findAll();
-        Mockito.verify(categoryDtoConverter).convertToCategoryDto(category1);
-        Mockito.verify(categoryDtoConverter).convertToCategoryDto(category2);
+        Mockito.verify(categoryDtoConverter).convertToCategoryDto(categoryList.get(0));
+        Mockito.verify(categoryDtoConverter).convertToCategoryDto(categoryList.get(1));
 
     }
 
     @Test
     public void testCreateCategory_shouldReturnCategoryDto() {
-        Category category = new Category("category-name-1");
+        /*Category category = new Category("category-name-1");
         CategoryDto categoryDto = new CategoryDto("category-id-1", "category-name-1");
-        CreateCategoryRequest createCategoryRequest = new CreateCategoryRequest("category-name-1");
+        CreateCategoryRequest createCategoryRequest = new CreateCategoryRequest("category-name-1");*/
+        Category category = generateCategory();
+        CategoryDto categoryDto = generateCategoryDto();
+        CreateCategoryRequest createCategoryRequest = generateCreateCategoryRequest();
 
-        Mockito.when(categoryRepository.save(category)).thenReturn(category);
+        Mockito.when(categoryRepository.save(any())).thenReturn(category);
         Mockito.when(categoryDtoConverter.convertToCategoryDto(category)).thenReturn(categoryDto);
 
         CategoryDto result = categoryService.createCategory(createCategoryRequest);

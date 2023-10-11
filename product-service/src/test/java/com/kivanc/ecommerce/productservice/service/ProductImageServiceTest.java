@@ -1,5 +1,6 @@
 package com.kivanc.ecommerce.productservice.service;
 
+import com.kivanc.ecommerce.productservice.TestSupport;
 import com.kivanc.ecommerce.productservice.dto.ProductImageDto;
 import com.kivanc.ecommerce.productservice.dto.converter.ProductImageDtoConverter;
 import com.kivanc.ecommerce.productservice.helper.FileNameHelper;
@@ -23,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-class ProductImageServiceTest {
+class ProductImageServiceTest extends TestSupport {
     private ProductImageRepository productImageRepository;
     private ProductImageDtoConverter productImageDtoConverter;
     private ProductService productService;
@@ -39,14 +40,14 @@ class ProductImageServiceTest {
         localStorageService = mock(LocalStorageService.class);
 
         productImageService = new ProductImageService(productImageRepository, productImageDtoConverter, productService, localStorageService);
-        ReflectionTestUtils.setField(productImageService, "folderPath", "deneme");
+        ReflectionTestUtils.setField(productImageService, "folderPath", "folderPathTest");
 
     }
 
     @Test
     public void uploadProductImage_withoutIOException_shouldReturnProductImageDto() throws IOException {
-        String productId = "123";
-        String folderPath = "deneme";
+        String productId = "product-id";
+        /*String folderPath = "folderPathTest";
         String originalFileName = "testImage.jpg";
         MultipartFile imageFile = new MockMultipartFile("image", originalFileName, "image/jpeg", new byte[1]);
         String newFileName = "randomFileName.jpg";
@@ -60,11 +61,16 @@ class ProductImageServiceTest {
                 category);
 
         ProductImage productImage = new ProductImage(newFileName, folderPath, product);
-        ProductImageDto productImageDto = new ProductImageDto("1", newFileName, folderPath, productId);
+        ProductImageDto productImageDto = new ProductImageDto("1", newFileName, folderPath, productId);*/
+
+        Product product = generateProduct(productId);
+        ProductImage productImage = generateProductImage();
+        ProductImageDto productImageDto = generateProductImageDto();
+        MultipartFile imageFile = generateMultipartFile();
 
         // mock static method
         MockedStatic<FileNameHelper> mockedStatic = mockStatic(FileNameHelper.class);
-        mockedStatic.when(() -> FileNameHelper.generateRandomFileName(originalFileName)).thenReturn(newFileName);
+        mockedStatic.when(() -> FileNameHelper.generateRandomFileName("testImage.jpg")).thenReturn("randomFileName.jpg");
 
         when(productService.findProductById(productId)).thenReturn(product);
         when(productImageRepository.save(productImage)).thenReturn(productImage);
@@ -75,7 +81,7 @@ class ProductImageServiceTest {
         assertNotNull(result);
         assertEquals(result, productImageDto);
 
-        verify(localStorageService, times(1)).uploadImage(eq(imageFile), eq(folderPath), eq(newFileName));
+        verify(localStorageService, times(1)).uploadImage(eq(imageFile), eq("folderPathTest"), eq("randomFileName.jpg"));
         verify(productService, times(1)).findProductById(productId);
         verify(productImageRepository, times(1)).save(productImage);
         verify(productImageDtoConverter, times(1)).convertToProductImageDto(productImage);
