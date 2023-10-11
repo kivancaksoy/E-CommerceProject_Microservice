@@ -20,8 +20,10 @@ public class LocalStorageService {
         }
 
         // Resim dosyasını kaydetme
+        //TODO cover with try catch
         byte[] bytes = file.getBytes();
         Path filePath = Paths.get(folderPath, fileName);
+        //TODO cover with try catch
         Files.write(filePath, bytes);
 
     }

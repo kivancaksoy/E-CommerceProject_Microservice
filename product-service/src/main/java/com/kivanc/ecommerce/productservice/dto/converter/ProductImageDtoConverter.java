@@ -13,7 +13,7 @@ public class ProductImageDtoConverter {
         return new ProductImageDto(
                 Objects.requireNonNull(productImage.getId()),
                 productImage.getImageName(),
-                productImage.getImagePath(),
+                productImage.getFolderPath(),
                 Objects.requireNonNull(productImage.getProduct().getId())
         );
     }

@@ -16,7 +16,7 @@ data class ProductImage @JvmOverloads constructor(
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     val id: String? = "",
     val imageName: String,
-    val imagePath: String,
+    val folderPath: String,
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false, referencedColumnName = "id")
