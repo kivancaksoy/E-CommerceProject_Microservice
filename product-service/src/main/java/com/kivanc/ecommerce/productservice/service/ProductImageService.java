@@ -6,6 +6,7 @@ import com.kivanc.ecommerce.productservice.helper.FileNameHelper;
 import com.kivanc.ecommerce.productservice.helper.LocalStorageService;
 import com.kivanc.ecommerce.productservice.model.ProductImage;
 import com.kivanc.ecommerce.productservice.repository.ProductImageRepository;
+import com.kivanc.ecommerce.productservice.util.ProductImageBusinessRuleUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,8 @@ public class ProductImageService {
 
     @Transactional
     public ProductImageDto uploadProductImage(MultipartFile imageFile, String productId) throws IOException {
+        ProductImageBusinessRuleUtil.checkProductImageCount(productImageRepository.findByProductId(productId).size());
+
         String newFileName = FileNameHelper.generateRandomFileName(Objects.requireNonNull(imageFile.getOriginalFilename()));
 
         localStorageService.uploadImage(imageFile, folderPath, newFileName);

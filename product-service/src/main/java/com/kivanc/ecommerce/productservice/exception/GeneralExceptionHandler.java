@@ -48,4 +48,10 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
         logger.error(exception.getMessage());
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(BusinessRuleViolationException.class)
+    public ResponseEntity<?> handle(BusinessRuleViolationException exception) {
+        logger.error(exception.getMessage());
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+    }
 }
