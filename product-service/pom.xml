@@ -69,7 +69,13 @@
 			<artifactId>spring-cloud-starter-vault-config</artifactId>
 		</dependency>
 
-	</dependencies>
+		<!-- Eureka -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-netflix-eureka-client</artifactId>
+        </dependency>
+
+    </dependencies>
 
 	<dependencyManagement>
 		<dependencies>
