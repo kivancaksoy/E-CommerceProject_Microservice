@@ -38,13 +38,13 @@ public class ProductImageService {
 
         String newFileName = FileNameHelper.generateRandomFileName(Objects.requireNonNull(imageFile.getOriginalFilename()));
 
-        localStorageService.uploadImage(imageFile, folderPath, newFileName);
-
         ProductImage productImage = new ProductImage(
                 newFileName,
                 folderPath,
                 productService.findProductById(productId)
         );
+
+        localStorageService.uploadImage(imageFile, folderPath, newFileName);
 
         return productImageDtoConverter.convertToProductImageDto(productImageRepository.save(productImage));
     }
