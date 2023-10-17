@@ -14,7 +14,6 @@ import org.hibernate.annotations.UuidGenerator;
 public class OrderItem {
     @Id
     @UuidGenerator
-    @Column(name = "order_item_id")
     private String id;
 
     private String productId;
@@ -22,6 +21,6 @@ public class OrderItem {
     private Integer quantity;
 
     @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false, referencedColumnName = "order_id")
+    @JoinColumn(name = "order_id", nullable = false, referencedColumnName = "id")
     private Order order;
 }

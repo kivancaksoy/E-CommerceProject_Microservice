@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -34,5 +35,10 @@ public class ProductController {
     @GetMapping("/getbyid")
     public ResponseEntity<ProductDto> getProductById(@RequestParam(name = "id") @NotEmpty String id) {
         return ResponseEntity.ok(productService.getProductById(id));
+    }
+
+    @GetMapping("/getpricebyid")
+    public ResponseEntity<BigDecimal> getProductPriceById(@RequestParam(name = "id") @NotEmpty String id) {
+        return ResponseEntity.ok(productService.getProductPriceById(id));
     }
 }

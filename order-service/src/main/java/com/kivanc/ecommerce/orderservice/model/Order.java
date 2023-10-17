@@ -17,7 +17,6 @@ import java.util.List;
 @NoArgsConstructor
 public class Order {
     @Id
-    @Column(name = "order_id")
     @UuidGenerator
     private String id;
 

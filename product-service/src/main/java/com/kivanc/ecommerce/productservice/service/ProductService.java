@@ -10,6 +10,7 @@ import com.kivanc.ecommerce.productservice.model.Product;
 import com.kivanc.ecommerce.productservice.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -52,5 +53,9 @@ public class ProductService {
     protected Product findProductById(String productId) {
         return productRepository.findById(productId)
                 .orElseThrow(() -> new ProductNotFoundException("Product could not be found by id: " + productId));
+    }
+
+    public BigDecimal getProductPriceById(String id) {
+        return findProductById(id).getPrice();
     }
 }

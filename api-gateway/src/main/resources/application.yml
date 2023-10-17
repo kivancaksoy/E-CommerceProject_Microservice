@@ -8,6 +8,10 @@ spring:
           uri: lb://product-service
           predicates:
             - Path=/v1/product/**, /v1/category/**, /v1/productimage/**
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/v1/order/**
       discovery:
         locator:
           enabled: true
