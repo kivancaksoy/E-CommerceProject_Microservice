@@ -15,7 +15,7 @@ public class OrderItemConverter {
 
     public OrderItem convertToOrderItem(OrderItemDto orderItemDto) {
         OrderItem orderItem = new OrderItem();
-        orderItem.setProductId(orderItemDto.productId());
+        orderItem.setProductId(orderItemDto.id());
         orderItem.setQuantity(orderItemDto.quantity());
 
         return orderItem;

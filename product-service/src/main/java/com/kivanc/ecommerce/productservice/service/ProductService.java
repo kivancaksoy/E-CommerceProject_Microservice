@@ -1,18 +1,17 @@
 package com.kivanc.ecommerce.productservice.service;
 
-import com.kivanc.ecommerce.productservice.dto.CategoryDto;
 import com.kivanc.ecommerce.productservice.dto.CreateProductRequest;
 import com.kivanc.ecommerce.productservice.dto.ProductDto;
+import com.kivanc.ecommerce.productservice.dto.UpdateProductStockRequest;
 import com.kivanc.ecommerce.productservice.dto.converter.ProductDtoConverter;
 import com.kivanc.ecommerce.productservice.exception.ProductNotFoundException;
-import com.kivanc.ecommerce.productservice.model.Category;
 import com.kivanc.ecommerce.productservice.model.Product;
 import com.kivanc.ecommerce.productservice.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class ProductService {
@@ -55,7 +54,18 @@ public class ProductService {
                 .orElseThrow(() -> new ProductNotFoundException("Product could not be found by id: " + productId));
     }
 
-    public BigDecimal getProductPriceById(String id) {
-        return findProductById(id).getPrice();
+    public void updateStock(List<UpdateProductStockRequest> updateProductStockRequestList) {
+        List<Product> productList = new ArrayList<>();
+        for (UpdateProductStockRequest updateProductStockRequest : updateProductStockRequestList) {
+            Product product = findProductById(updateProductStockRequest.getId());
+
+            if (product.getUnitsInStock() - updateProductStockRequest.getQuantity() < 0) {
+                throw new RuntimeException("Stock can not be negative.");
+            }
+
+            product.setUnitsInStock(product.getUnitsInStock() - updateProductStockRequest.getQuantity());
+            productList.add(product);
+        }
+        productRepository.saveAll(productList);
     }
 }

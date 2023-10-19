@@ -21,7 +21,7 @@ data class Product @JvmOverloads constructor(
     val productName: String,
     val details: String,
     val price: BigDecimal,
-    val unitsInStock: Int,
+    var unitsInStock: Int,
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false, referencedColumnName = "id")
