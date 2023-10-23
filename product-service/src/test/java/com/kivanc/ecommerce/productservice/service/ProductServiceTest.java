@@ -11,11 +11,8 @@ import com.kivanc.ecommerce.productservice.model.Product;
 import com.kivanc.ecommerce.productservice.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -75,6 +72,7 @@ class ProductServiceTest extends TestSupport {
         Product product = generateProduct(productId);
         ProductDto productDto = generateProductDto();
 
+        //TODO productService.findProductById()
         Mockito.when(productRepository.findById(productId)).thenReturn(Optional.of(product));
         Mockito.when(productDtoConverter.convertToProductDto(product)).thenReturn(productDto);
 
