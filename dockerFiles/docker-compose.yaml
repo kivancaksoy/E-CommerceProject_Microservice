@@ -26,6 +26,6 @@ services:
       - ./postgres/multiple-databases.sh:/docker-entrypoint-initdb.d/multiple-databases.sh
     environment:
       #POSTGRES_DB: orderDb
-      POSTGRES_MULTIPLE_DATABASES: productdb,orderdb
+      POSTGRES_MULTIPLE_DATABASES: productdb,orderdb,paymentdb,mockdatadb
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypassword

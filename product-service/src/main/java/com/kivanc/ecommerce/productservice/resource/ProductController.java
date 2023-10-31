@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/product")
 @Validated
+//@CrossOrigin(origins = "http://localhost:8888/") cors configuration added to api-gateway application.yml
 public class ProductController {
     private final ProductService productService;
 

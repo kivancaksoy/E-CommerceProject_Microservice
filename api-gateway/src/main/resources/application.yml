@@ -12,9 +12,27 @@ spring:
           uri: lb://order-service
           predicates:
             - Path=/v1/order/**
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/v1/creditCardPayment/**
       discovery:
         locator:
           enabled: true
+      #CORS policy added.
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin
+        - DedupeResponseHeader=Access-Control-Allow-Credentials
+        - DedupeResponseHeader=Access-Control-Allow-Methods
+        - DedupeResponseHeader=Access-Control-Allow-Headers
+        - SetStatus=200
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000/"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
 server:
   port: 8888
 
