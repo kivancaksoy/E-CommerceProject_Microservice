@@ -11,7 +11,12 @@ data class CreateProductRequest(
 
     @field:Min(1)
     val price: BigDecimal,
+
+    @field:Min(0)
     val unitsInStock: Int,
+
+    @field:NotBlank
+    val supplierId: String,
 
     @field:NotBlank
     val categoryId: String

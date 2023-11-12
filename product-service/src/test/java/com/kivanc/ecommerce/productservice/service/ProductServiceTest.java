@@ -146,6 +146,7 @@ class ProductServiceTest extends TestSupport {
                             product.getDetails(),
                             product.getPrice(),
                             product.getUnitsInStock(),
+                            product.getSupplierId(),
                             new CategoryDto(
                                     Objects.requireNonNull(product.getCategory().getId()),
                                     product.getCategory().getCategoryName()

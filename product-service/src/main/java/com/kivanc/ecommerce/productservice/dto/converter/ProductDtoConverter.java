@@ -22,6 +22,7 @@ public class ProductDtoConverter {
                 product.getDetails(),
                 product.getPrice(),
                 product.getUnitsInStock(),
+                product.getSupplierId(),
                 categoryDtoConverter.convertToCategoryDto(product.getCategory())
         );
     }

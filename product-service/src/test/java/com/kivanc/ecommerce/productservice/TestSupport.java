@@ -55,6 +55,7 @@ public class TestSupport {
                 "product-details",
                 new BigDecimal(10),
                 5,
+                "supplier-id",
                 generateCategory("category-id"));
     }
 
@@ -65,6 +66,7 @@ public class TestSupport {
                 "product-details",
                 new BigDecimal(10),
                 5,
+                "supplier-id",
                 generateCategory("category-id"));
     }
 
@@ -85,6 +87,7 @@ public class TestSupport {
                 "product-details",
                 new BigDecimal(10),
                 5,
+                "supplier-id",
                 generateCategoryDto());
     }
 
@@ -95,6 +98,7 @@ public class TestSupport {
                 "product-details",
                 new BigDecimal(10),
                 5,
+                "supplier-id",
                 generateCategoryDto());
 
         ProductDto productDto2 = new ProductDto(
@@ -103,6 +107,7 @@ public class TestSupport {
                 "product-details",
                 new BigDecimal(10),
                 5,
+                "supplier-id",
                 generateCategoryDto());
 
         List<ProductDto> productDtoList = new ArrayList<>();
@@ -118,6 +123,7 @@ public class TestSupport {
                 "product-details",
                 new BigDecimal(10),
                 5,
+                "supplier-id",
                 "category-id");
     }
 

@@ -8,5 +8,6 @@ data class ProductDto(
     val details: String,
     val price: BigDecimal,
     val unitsInStock: Int,
+    val supplierId: String,
     val category: CategoryDto,
 )

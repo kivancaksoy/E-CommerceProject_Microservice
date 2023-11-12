@@ -31,6 +31,7 @@ public class ProductService {
                 createProductRequest.getDetails(),
                 createProductRequest.getPrice(),
                 createProductRequest.getUnitsInStock(),
+                createProductRequest.getSupplierId(),
                 categoryService.findCategoryById(createProductRequest.getCategoryId())
         );
 
